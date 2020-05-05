@@ -1,0 +1,14 @@
+/.vs
+/Library
+/Logs
+/obj
+/Temp
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+GameDev.tv Game Jam.sln
+NavMeshComponents.csproj
+NavMeshComponentsEditor.csproj
+NavMeshComponentsExamples.csproj
+NavMeshComponentsExamplesEditor.csproj
+NavMeshComponentsTestsEditmode.csproj
+NavMeshComponentsTestsPlaymode.csproj
