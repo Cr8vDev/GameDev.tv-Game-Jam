@@ -5,15 +5,16 @@ using UnityEngine;
 public class FighterControls : MonoBehaviour
 {
     [SerializeField]
-    private float rotationSpeed;
+    private float XYRotationSpeed;
     [SerializeField]
     private float speed;
+    [SerializeField]
+    [Range(0f, 10f)]
+    private float rotationZSpeed = 1f;
 
     private Transform fighterChild;
 
-    float rotationZ;
-
-    float t = 0f;
+    Vector3 vectorWrite = Vector3.zero;
 
     private void Start()
     {
@@ -32,27 +33,29 @@ public class FighterControls : MonoBehaviour
         {
             if (x < 0f)
             {
-                var lerpRotation = Mathf.LerpAngle(fighterChild.localEulerAngles.z, 30f, Time.deltaTime);
+                var lerpRotation = Mathf.LerpAngle(fighterChild.localEulerAngles.z, 60f, Time.deltaTime * rotationZSpeed);
 
                 fighterChild.localEulerAngles = new Vector3(0f, fighterChild.localEulerAngles.y, lerpRotation);
 
-                transform.eulerAngles -= new Vector3(0f, Time.deltaTime * rotationSpeed, 0f);
+                vectorWrite.y -= Time.deltaTime * XYRotationSpeed;
             }
             else if(x > 0f)
             {
-                var lerpRotation = Mathf.LerpAngle(fighterChild.localEulerAngles.z, -30f, Time.deltaTime);
+                var lerpRotation = Mathf.LerpAngle(fighterChild.localEulerAngles.z, -60f, Time.deltaTime * rotationZSpeed);
 
                 fighterChild.localEulerAngles = new Vector3(0f, fighterChild.localEulerAngles.y, lerpRotation);
 
-                transform.eulerAngles += new Vector3(0f, Time.deltaTime * rotationSpeed, 0f);
+                vectorWrite.y += Time.deltaTime * XYRotationSpeed;
             }
 
-            transform.eulerAngles -= new Vector3(y * Time.deltaTime * rotationSpeed, 0.0f, 0f);
+            vectorWrite.x -= y * Time.deltaTime * XYRotationSpeed;
+
+            transform.eulerAngles = vectorWrite;
         }
 
         if (Mathf.Approximately(x, 0f))
         {
-            var lerpRotation = Mathf.LerpAngle(fighterChild.localEulerAngles.z, 0f, Time.deltaTime);
+            var lerpRotation = Mathf.LerpAngle(fighterChild.localEulerAngles.z, 0f, Time.deltaTime * (rotationZSpeed - 2f));
 
             fighterChild.localEulerAngles = new Vector3(0f, fighterChild.localEulerAngles.y, lerpRotation);
         }
